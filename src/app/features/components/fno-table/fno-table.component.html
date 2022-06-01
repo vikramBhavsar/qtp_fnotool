@@ -1,0 +1,209 @@
+<div class="container">
+  <div class="position-list">
+    <div
+      class="position"
+      *ngFor="let pos of this.fno_form_service.positionList; let idx = index"
+    >
+      <!-- Displaying properties in table -->
+      <div class="position-details row">
+        <div class="fut-op-message" class="col-8">
+          <div
+            *ngIf="pos.segment == '1'; then futureMessage; else optionMessage"
+          ></div>
+          <ng-template #futureMessage>
+            <p>
+              <small *ngIf="pos.buy_sell == 'buy'">+</small>
+              <small *ngIf="pos.buy_sell == 'sell'">-</small>
+              <small
+                >{{ pos.lotqy }} {{ pos.index }} Futures -
+                {{ pos.fo_price }}</small
+              >
+            </p>
+          </ng-template>
+          <ng-template #optionMessage>
+            <small *ngIf="pos.buy_sell == 'buy'">+</small>
+            <small *ngIf="pos.buy_sell == 'sell'">-</small>
+            <small
+              >{{ pos.lotqy }} {{ pos.index }} {{ pos.optionStrike }}
+              {{ pos.optionType }} - {{ pos.fo_price }}</small
+            >
+          </ng-template>
+        </div>
+
+        <div class="configuring-buttons col-4">
+          <div class="row">
+            <i
+              class="fa-solid fa-trash-can col-6"
+              (click)="deletePosition(idx)"
+            ></i>
+            <i class="fas fa-edit col-6" (click)="openLg(content, idx)"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title display-4 ">Edit Position</h4>
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="segment" *ngIf="this.stockDetails.segment == '1'"></div>
+
+      <div
+        *ngIf="
+          this.stockDetails.segment == '1';
+          then futureBlock;
+          else optionBlock
+        "
+      ></div>
+      <ng-template #optionBlock>
+        <form [formGroup]="this.fnoModalform">
+          <label for="name" class="">Square Off Price</label>
+          <input
+            id="squareoff_price"
+            class="form-control"
+            type="number"
+            formControlName="squareoff_price"
+          />
+
+          <label for="name" class="">Option Price</label>
+          <input
+            id="fo_price"
+            class="form-control"
+            type="number"
+            formControlName="fo_price"
+          />
+
+          <label for="name" class="">LOT QTY</label>
+          <input
+            id="lotqy"
+            class="form-control"
+            type="number"
+            formControlName="lotqy"
+          />
+
+          <label for="optionType">Select option Type</label>
+          <select
+            id="optionType"
+            class="form-select"
+            formControlName="optionType"
+            aria-label="Default select example"
+          >
+            <option value="CE" selected>CE</option>
+            <option value="PE">PE</option>
+          </select>
+
+          <div class="col-sm radio-container w-25">
+            <div class="col-sm">
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="buy_sell"
+                  id="buyradio"
+                  formControlName="buy_sell"
+                  value="buy"
+                  checked
+                />
+                <label class="form-check-label" for="buyradio"> Buy </label>
+              </div>
+            </div>
+
+            <div class="col-sm">
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  id="sellradio"
+                  formControlName="buy_sell"
+                  value="sell"
+                />
+                <label class="form-check-label" for="sellradio"> sell </label>
+              </div>
+            </div>
+          </div>
+        </form>
+      </ng-template>
+
+      <ng-template #futureBlock> 
+        <form [formGroup]="this.fnoModalform">
+          <label for="squareoff_price" class="">Square Off Price</label>
+          <input
+            id="squareoff_price"
+            class="form-control"
+            type="number"
+            formControlName="squareoff_price"
+          />
+
+          <label for="fo_price" class="">Future Price</label>
+          <input
+            id="fo_price"
+            class="form-control"
+            type="number"
+            formControlName="fo_price"
+          />
+
+          <label for="name" class="">LOT QTY</label>
+          <input
+            id="lotqy"
+            class="form-control"
+            type="number"
+            formControlName="lotqy"
+          />
+
+          <div class="col-sm radio-container w-25">
+            <div class="col-sm">
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="buy_sell"
+                  id="buyradio"
+                  formControlName="buy_sell"
+                  value="buy"
+                  checked
+                />
+                <label class="form-check-label" for="buyradio"> Buy </label>
+              </div>
+            </div>
+
+            <div class="col-sm">
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  id="sellradio"
+                  formControlName="buy_sell"
+                  value="sell"
+                />
+                <label class="form-check-label" for="sellradio"> sell </label>
+              </div>
+            </div>
+          </div>
+        </form>
+      </ng-template>
+
+      <button type="button" class="btn btn-outline-primary" (click)="onEdit()">Confirm Edit</button>
+
+
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-light"
+      (click)="modal.close('Close click')"
+    >
+      Close
+    </button>
+  </div>
+</ng-template>

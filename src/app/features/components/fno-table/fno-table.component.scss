@@ -1,0 +1,20 @@
+.container{
+    .position-list{
+        .position{
+            padding: 0.5rem 2rem;
+            border-bottom: solid 1px #333;
+
+            &:first-child{
+            border-top: solid 1px #333;
+            }
+
+            .position-details{
+                i{
+                    font-size: medium;
+                    font-weight: lighter;
+                    cursor: pointer;
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,158 @@
+
+<div class="form-container">
+  <div class="container">
+    <form [formGroup]="this.fno_form_service.fnoform" (ngSubmit)="onSubmit()">
+      <div>
+        <label for="name" class="">Enter Index/Stock </label>
+        <input
+          id="index"
+          class="form-control"
+          type="text"
+          formControlName="index"
+        />
+      </div>
+
+      <div class="row mt-4">
+        <div class="col-sm">
+          <label for="address">Spot Price </label>
+          <input
+            id="spot_price"
+            class="form-control"
+            type="number"
+            formControlName="spot_price"
+          />
+        </div>
+        <div class="col-sm">
+
+
+
+          <label for="fo_price" *ngIf="this.fno_form_service.fnoform.value['segment'] == '1'">Future Price</label>
+          <label for="fo_price" *ngIf="this.fno_form_service.fnoform.value['segment'] == '2'">Option Price.</label>
+          <input
+            id="fo_price"
+            class="form-control"
+            type="number"
+            formControlName="fo_price"
+          />
+        </div>
+        <div class="col-sm">
+          <label for="address">Lot Size </label>
+          <input
+            id="lot_size"
+            class="form-control"
+            type="number"
+            formControlName="lot_size"
+          />
+        </div>
+      </div>
+
+      <hr />
+
+      <div class="row mt-4">
+        <div class="col-sm-4">
+          <label for="address">Select Segment</label>
+          <select
+            class="form-select"
+            formControlName="segment"
+            aria-label="Default select example"
+            formGroupName="segment"
+          >
+            <option value="1" selected>Futures</option>
+            <option value="2">Options</option>
+          </select> 
+        </div>
+
+
+        <div class="col-sm-4">
+          <label for="squareoff_price">Select Square off price:</label>
+          <input
+            id="squareoff_price"
+            class="form-control"
+            type="number"
+            formControlName="squareoff_price"
+          />
+        </div>
+
+        <div
+          class="col-sm-4"
+          *ngIf="this.fno_form_service.fnoform.value['segment'] == '2'"
+        >
+          <div class="options-option">
+            <div class="row">
+              <label for="optionStrike">Select option Strike</label>
+              <input
+                id="optionStrike"
+                class="form-control"
+                type="number"
+                formControlName="optionStrike"
+              />
+            </div>
+
+            <div class="row">
+              <label for="address">Select option Type</label>
+              <select
+                class="form-select"
+                formControlName="optionType"
+                aria-label="Default select example"
+              >
+                <option value="CE" selected>CE</option>
+                <option value="PE">PE</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <hr class="mt-4 mb-4" />
+
+        <div class="row">
+          <div class="col-sm radio-container w-25">
+            <div class="col-sm">
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="buy_sell"
+                  id="buyradio"
+                  formControlName="buy_sell"
+                  value="buy"
+                  checked
+                />
+                <label class="form-check-label" for="buyradio"> Buy </label>
+              </div>
+            </div>
+
+            <div class="col-sm">
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  id="sellradio"
+                  formControlName="buy_sell"
+                  value="sell"
+                />
+                <label class="form-check-label" for="sellradio"> sell </label>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-sm">
+            <label for="lotqy">Lot QTY:</label>
+            <input
+              id="lotqy"
+              class="form-control"
+              type="number"
+              formControlName="lotqy"
+            />
+          </div>
+        </div>
+
+        <div class="col-sm">
+          <button class="btn btn-outline-primary w-25" type="submit">
+            Add Position
+          </button>
+        </div>
+      </div>
+
+    </form>
+  </div>
+</div>
